@@ -14,6 +14,9 @@ typedef struct stack {
   elem_t* arr;
 } stack;
 
+const unsigned long long canary;
+
 stack* construct();
 void push(stack* stack, elem_t elem);
 elem_t pop(stack* stack);
+Exceptions verify(stack* stack);
