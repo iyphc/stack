@@ -3,7 +3,8 @@
 
 typedef enum Exceptions {
   OK,
-  size_problem  
+  size_problem,
+  hash_problem  
 } Exceptions;
 
 typedef int elem_t;
@@ -13,6 +14,7 @@ typedef struct stack {
   int pointer;
   Exceptions status;
   elem_t* arr;
+  int hash;
 } stack;
 
 const unsigned long long canary;
@@ -23,3 +25,5 @@ elem_t pop(stack* stack);
 Exceptions verify(stack* stack);
 void resize_up(stack* stack);
 void resize_down(stack* stack);
+int MurmurHash2 (stack* stack);
+Exceptions hash_verify(stack* stack);
