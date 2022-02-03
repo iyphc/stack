@@ -95,6 +95,24 @@ test_Exceptions test_resize_down() {
   return complete;
 } 
 
+test_Exceptions test_hash_verify() {
+  stack* stack = construct();
+  for(int i = 0; i < 10; i++) {
+    push(stack, i+1);
+  }
+  if(hash_verify(stack) != OK) {
+    free(stack);
+    return failure;
+  }
+  stack->arr[3] = 100;
+  if(hash_verify(stack) == OK) {
+    free(stack);
+    return failure;
+  }
+  free(stack);
+  return complete;
+}
+
 void run_all_tests() {
   assert(test_construct() == complete);
   assert(test_verify() == complete);
@@ -102,5 +120,6 @@ void run_all_tests() {
   assert(test_pop() == complete);
   assert(test_resize_up() == complete);
   assert(test_resize_down() == complete);
+  assert(test_hash_verify() == complete);
   printf("\nALL TESTS PASSED!\n");
 }

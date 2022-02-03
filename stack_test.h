@@ -5,6 +5,7 @@ typedef enum test_Exceptions {
   failure  
 } test_Exceptions;
 
+test_Exceptions test_hash_verify();
 test_Exceptions test_resize_down();
 test_Exceptions test_resize_up();
 test_Exceptions test_construct();
