@@ -4,6 +4,16 @@
 
 const unsigned long long canary = 15000987876788768;
 
+/**  
+  * @file stack.c
+  * @brief Contains funstions that mimic ctack manipulation
+*/
+
+/**
+  * @brief Constructs a stack 
+  * @return Created stack
+*/
+
 stack* construct() {
   stack* stack = (struct stack*)calloc(1, sizeof(stack));
   stack->size = 4; // не работает при size < 4
@@ -15,6 +25,12 @@ stack* construct() {
   stack->hash = MurmurHash2(stack);
   return stack;
 }
+
+/**
+  * @brief Adds an element to the start of the array
+  * @param stack The stack itself to which the element is being added
+  * @param elem The element which is added to the stack
+*/
 
 void push(stack* stack, elem_t elem) {
   if (verify(stack) != OK || hash_verify(stack) != OK) {
@@ -29,6 +45,12 @@ void push(stack* stack, elem_t elem) {
     return;
   }
 }
+
+/**
+  * @brief Removes the element from the end of a stack
+  * @param stack The stack itself to which the element is being removed
+  * @return Element which is removed from the end of a stack
+*/
 
 elem_t pop(stack* stack) {
   if (verify(stack) != OK || hash_verify(stack) != OK) {
@@ -48,6 +70,12 @@ elem_t pop(stack* stack) {
   return (elem_t)-10e7;
 } 
 
+/**
+  * @brief Checks the stack for a canary after the last element
+  * @param stack The stack which is being checked
+  * @return Stack status
+*/
+
 Exceptions verify(stack* stack) {
   if(stack->arr[stack->pointer+1] != (elem_t)canary) {
     stack->status = size_problem;
@@ -56,6 +84,12 @@ Exceptions verify(stack* stack) {
   stack->status = OK;
   return OK;
 }
+
+/**
+  * @brief Checks the hash of a stack 
+  * @param stack The stack which is being checked
+  * @return Stack status
+*/
 
 Exceptions hash_verify(stack* stack) {
   if(stack->hash != MurmurHash2(stack)) {
@@ -66,6 +100,11 @@ Exceptions hash_verify(stack* stack) {
   return OK;
 }
 
+/**
+  * @brief Increases stack size
+  * @param stack The stack which size is being increased
+*/
+
 void resize_up(stack* stack) {
   if(stack->pointer+1 == stack->size) {
     stack->arr = realloc(stack->arr, sizeof(elem_t)*(stack->size)*2+1);
@@ -73,6 +112,11 @@ void resize_up(stack* stack) {
   }
   stack->hash = MurmurHash2(stack);
 }
+
+/**
+  * @brief Reduces stack size
+  * @param stack The stack which size is being reduced
+*/
 
 void resize_down(stack* stack) {
   if(stack->size > 4) {
@@ -83,6 +127,12 @@ void resize_down(stack* stack) {
     stack->hash = MurmurHash2(stack);
   }
 }
+
+/**
+  * @brief Reduces stack size
+  * @param stack The stack from which the hash is created
+  * @return The hash of the stack
+*/
 
 int MurmurHash2 (stack* stack)
 {
