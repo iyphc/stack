@@ -12,7 +12,6 @@ int main() {
  for(int i = 0; i < 14; i++) {
   push(stack, (i+1)*10);
  }
- resize_down(stack);
  for(int i = 0; i < stack->size; i++) {
   printf("%d\n", (elem_t)pop(stack));
  }
