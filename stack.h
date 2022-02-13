@@ -12,9 +12,9 @@ typedef int elem_t;
 typedef struct stack {
   int size;
   int pointer;
+  int hash;
   Exceptions status;
   elem_t* arr;
-  int hash;
 } stack;
 
 const unsigned long long canary;
@@ -26,4 +26,4 @@ Exceptions verify(stack* stack);
 void resize_up(stack* stack);
 void resize_down(stack* stack);
 int MurmurHash2 (stack* stack);
-Exceptions hash_verify(stack* stack);
+Exceptions hash_verify(stack* stack); //выключена

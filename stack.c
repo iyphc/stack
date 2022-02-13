@@ -19,10 +19,10 @@ stack* construct() {
   stack->size = 4; // не работает при size < 4
   stack->pointer = -1;
   stack->status = OK;
-  elem_t* arr = (elem_t*)calloc(stack->size+1, sizeof(elem_t));
-  arr[stack->pointer+1] = (elem_t)canary;
-  (stack->arr) = arr;
-  stack->hash = MurmurHash2(stack);
+  elem_t* arr_tmp = (elem_t*)calloc(stack->size+1, sizeof(elem_t));
+  arr_tmp[stack->pointer+1] = (elem_t)canary;
+  (stack->arr) = arr_tmp;
+  (stack->hash) = 0;
   return stack;
 }
 
@@ -110,7 +110,7 @@ void resize_up(stack* stack) {
     stack->arr = realloc(stack->arr, sizeof(elem_t)*(stack->size)*2+1);
     stack->size*=2;
   }
-  stack->hash = MurmurHash2(stack);
+  //stack->hash = MurmurHash2(stack);
 }
 
 /**
