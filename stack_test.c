@@ -3,9 +3,12 @@
 #include "stack.h"
 #include "stack_test.h"
 
-test_Exceptions test_construct() {
+test_exceptions test_construct() {
   stack* stack = construct();
-  if (stack == NULL || stack->size != 4 || stack->pointer != -1) {
+  if (stack == NULL) {
+    return failure;
+  }
+  if (stack->size != 4 || stack->pointer != -1) {
     free(stack);
     return failure;
   }
@@ -17,7 +20,7 @@ test_Exceptions test_construct() {
   return complete;
 }
 
-test_Exceptions test_verify() {
+test_exceptions test_verify() {
   stack* stack = construct();
   if(stack->arr[stack->pointer+1] != (elem_t)canary) {
     free(stack);
@@ -32,7 +35,7 @@ test_Exceptions test_verify() {
   return complete;
 }
 
-test_Exceptions test_push() {
+test_exceptions test_push() {
   stack* stack = construct();
   push(stack, 10);
   if (stack->pointer != 0 || stack->arr[stack->pointer] != 10 || stack->status != OK || stack->arr[stack->pointer+1] != (elem_t)canary) {
@@ -49,7 +52,7 @@ test_Exceptions test_push() {
   return complete;
 }
 
-test_Exceptions test_pop() {
+test_exceptions test_pop() {
   stack* stack = construct();
   push(stack, 100);
   elem_t temp = pop(stack);
@@ -66,7 +69,7 @@ test_Exceptions test_pop() {
   return complete;
 }
 
-test_Exceptions test_resize_up() {
+test_exceptions test_resize_up() {
   stack* stack = construct();
   int temp_size = stack->size;
   for(int i = 0; i < 5; i++) {
@@ -80,7 +83,7 @@ test_Exceptions test_resize_up() {
   return complete;
 } 
 
-test_Exceptions test_resize_down() {
+test_exceptions test_resize_down() {
   stack* stack = construct();
   for(int i = 0; i < 8; i++) {
     push(stack, i+1);
@@ -95,7 +98,7 @@ test_Exceptions test_resize_down() {
   return complete;
 } 
 
-test_Exceptions test_hash_verify() {
+test_exceptions test_hash_verify() {
   stack* stack = construct();
   for(int i = 0; i < 10; i++) {
     push(stack, i+1);
