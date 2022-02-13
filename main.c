@@ -12,7 +12,7 @@ int main() {
  for(int i = 0; i < 14; i++) {
   push(stack, (i+1)*10);
  }
- for(int i = 0; i < stack->size; i++) {
+ while(stack->pointer >= 0) {
   printf("%d\n", (elem_t)pop(stack));
  }
  run_all_tests();
