@@ -1,6 +1,6 @@
 build: main.o stack.o stack_test.o
 	gcc main.o stack.o stack_test.o
-	./a.exe
+# 	./a.exe
 
 main.o: main.c
 	gcc -c main.c
@@ -12,5 +12,5 @@ stack_test.o: stack_test.c
 	gcc -c stack_test.c
 
 
-clean: stack.o stack_test.o main.o
+clean: 
 	rm stack.o stack_test.o main.o
