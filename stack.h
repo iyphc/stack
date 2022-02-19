@@ -17,7 +17,7 @@ typedef struct stack {
   elem_t* arr;
 } stack;
 
-const unsigned long long canary;
+const unsigned long long canary = 15000987876788768;
 
 stack* construct();
 void push(stack* stack, elem_t elem);

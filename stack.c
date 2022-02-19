@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-const unsigned long long canary = 15000987876788768;
-
 /**  
   * @file stack.c
   * @brief Contains funstions that mimic ctack manipulation
@@ -77,10 +75,10 @@ elem_t pop(stack* stack) {
 */
 
 Exceptions verify(stack* stack) {
-  if(stack->arr[stack->pointer+1] != (elem_t)canary) {
+  /*if(stack->arr[stack->pointer+1] != (elem_t)canary) {
     stack->status = size_problem;
     return size_problem;
-  }
+  }*/
   stack->status = OK;
   return OK;
 }
@@ -92,11 +90,11 @@ Exceptions verify(stack* stack) {
 */
 
 Exceptions hash_verify(stack* stack) {
-  if(stack->hash != MurmurHash2(stack)) {
+  /*if(stack->hash != MurmurHash2(stack)) {
     stack->status = hash_problem;
     return hash_problem;
   }
-  stack->status = OK;
+  stack->status = OK;*/
   return OK;
 }
 
@@ -110,7 +108,7 @@ void resize_up(stack* stack) {
     stack->arr = realloc(stack->arr, sizeof(elem_t)*(stack->size)*2+1);
     stack->size*=2;
   }
-  //stack->hash = MurmurHash2(stack);
+  stack->hash = MurmurHash2(stack);
 }
 
 /**

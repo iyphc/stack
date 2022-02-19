@@ -1,3 +1,6 @@
+#ifndef STACK_H_
+#define STACK_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
@@ -134,3 +137,4 @@ void run_all_tests() {
   //assert(test_hash_verify() == complete);
   printf("\nALL TESTS PASSED!\n");
 }
+#endif
