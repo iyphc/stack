@@ -1,14 +1,10 @@
-#ifndef STACK_H_
-#define STACK_H_
-
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack.h"
+
 #include "stack_test.h"
 
 test_exceptions test_construct() {
   stack* stack = construct();
-  printf("LOL\n");
   stack->hash = 0;
   if (stack == NULL) {
     return failure;
@@ -27,7 +23,6 @@ test_exceptions test_construct() {
 
 test_exceptions test_verify() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   if(stack->arr[stack->pointer+1] != (elem_t)canary) {
     free(stack);
     return failure;
@@ -43,7 +38,6 @@ test_exceptions test_verify() {
 
 test_exceptions test_push() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   push(stack, 10);
   if (stack->pointer != 0 || stack->arr[stack->pointer] != 10 || stack->status != OK || stack->arr[stack->pointer+1] != (elem_t)canary) {
     free(stack);
@@ -61,7 +55,6 @@ test_exceptions test_push() {
 
 test_exceptions test_pop() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   push(stack, 100);
   elem_t temp = pop(stack);
   if(temp != 100 || stack->pointer != -1 || stack->status != OK || stack->arr[stack->pointer+1] != (elem_t)canary) {
@@ -79,7 +72,6 @@ test_exceptions test_pop() {
 
 test_exceptions test_resize_up() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   int temp_size = stack->size;
   for(int i = 0; i < 5; i++) {
     push(stack, i+1);
@@ -94,7 +86,6 @@ test_exceptions test_resize_up() {
 
 test_exceptions test_resize_down() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   for(int i = 0; i < 8; i++) {
     push(stack, i+1);
   }
@@ -110,7 +101,6 @@ test_exceptions test_resize_down() {
 
 test_exceptions test_hash_verify() {
   stack* stack = construct();
-  stack->hash = MurmurHash2(stack); //костыль
   for(int i = 0; i < 10; i++) {
     push(stack, i+1);
   }
@@ -129,12 +119,11 @@ test_exceptions test_hash_verify() {
 
 void run_all_tests() {
   assert(test_construct() == complete);
-  //assert(test_verify() == complete);
-  //assert(test_push() == complete);
-  //assert(test_pop() == complete);
-  //assert(test_resize_up() == complete);
-  //assert(test_resize_down() == complete);
-  //assert(test_hash_verify() == complete);
+  assert(test_verify() == complete);
+  assert(test_push() == complete);
+  assert(test_pop() == complete);
+  assert(test_resize_up() == complete);
+  assert(test_resize_down() == complete);
+  assert(test_hash_verify() == complete);
   printf("\nALL TESTS PASSED!\n");
 }
-#endif

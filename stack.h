@@ -1,3 +1,6 @@
+#ifndef STACK_H_
+#define STACK_H_
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -17,7 +20,9 @@ typedef struct stack {
   elem_t* arr;
 } stack;
 
-const unsigned long long canary = 15000987876788768;
+
+// const unsigned long long canary = 15000987876788768;
+extern const unsigned long long canary;
 
 stack* construct();
 void push(stack* stack, elem_t elem);
@@ -27,3 +32,5 @@ void resize_up(stack* stack);
 void resize_down(stack* stack);
 int MurmurHash2 (stack* stack);
 Exceptions hash_verify(stack* stack); //выключена
+
+#endif

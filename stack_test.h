@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "stack.h"
 
 typedef enum test_exceptions {
   complete,

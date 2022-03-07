@@ -12,6 +12,8 @@
   * @return Created stack
 */
 
+const unsigned long long canary = 15000987876788768;
+
 stack* construct() {
   stack* stack = (struct stack*)calloc(1, sizeof(stack));
   stack->size = 4; // не работает при size < 4
@@ -75,10 +77,10 @@ elem_t pop(stack* stack) {
 */
 
 Exceptions verify(stack* stack) {
-  /*if(stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if(stack->arr[stack->pointer+1] != (elem_t)canary) {
     stack->status = size_problem;
     return size_problem;
-  }*/
+  }
   stack->status = OK;
   return OK;
 }
@@ -90,11 +92,11 @@ Exceptions verify(stack* stack) {
 */
 
 Exceptions hash_verify(stack* stack) {
-  /*if(stack->hash != MurmurHash2(stack)) {
+  if(stack->hash != MurmurHash2(stack)) {
     stack->status = hash_problem;
     return hash_problem;
   }
-  stack->status = OK;*/
+  stack->status = OK;
   return OK;
 }
 
