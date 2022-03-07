@@ -13,8 +13,8 @@ typedef enum Exceptions {
 typedef int elem_t;
 
 typedef struct stack {
+  int capacity;
   int size;
-  int pointer;
   int hash;
   Exceptions status;
   elem_t* arr;

@@ -9,11 +9,11 @@ test_exceptions test_construct() {
   if (stack == NULL) {
     return failure;
   }
-  if (stack->size != 4 || stack->pointer != -1) {
+  if (stack->capacity != 4 || stack->size != -1) {
     free(stack);
     return failure;
   }
-  if (stack->status != OK || stack->arr == NULL || stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if (stack->status != OK || stack->arr == NULL || stack->arr[stack->size+1] != (elem_t)canary) {
     free(stack);
     return failure;
   }
@@ -23,12 +23,12 @@ test_exceptions test_construct() {
 
 test_exceptions test_verify() {
   stack* stack = construct();
-  if(stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if(stack->arr[stack->size+1] != (elem_t)canary) {
     free(stack);
     return failure;
   }
-  stack->arr[stack->pointer+1] = 11;
-  if(stack->arr[stack->pointer+1] == (elem_t)canary) {
+  stack->arr[stack->size+1] = 11;
+  if(stack->arr[stack->size+1] == (elem_t)canary) {
     free(stack);
     return failure;
   }  
@@ -39,13 +39,13 @@ test_exceptions test_verify() {
 test_exceptions test_push() {
   stack* stack = construct();
   push(stack, 10);
-  if (stack->pointer != 0 || stack->arr[stack->pointer] != 10 || stack->status != OK || stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if (stack->size != 0 || stack->arr[stack->size] != 10 || stack->status != OK || stack->arr[stack->size+1] != (elem_t)canary) {
     free(stack);
     return failure;
   }
-  stack->arr[stack->pointer+1] = 11;
+  stack->arr[stack->size+1] = 11;
   push(stack, 20);
-  if (stack->arr[stack->pointer] == 20 && stack->status != size_problem) {
+  if (stack->arr[stack->size] == 20 && stack->status != size_problem) {
     free(stack);
     return failure;
   }
@@ -57,7 +57,7 @@ test_exceptions test_pop() {
   stack* stack = construct();
   push(stack, 100);
   elem_t temp = pop(stack);
-  if(temp != 100 || stack->pointer != -1 || stack->status != OK || stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if(temp != 100 || stack->size != -1 || stack->status != OK || stack->arr[stack->size+1] != (elem_t)canary) {
     free(stack);
     return failure;
   }
@@ -72,11 +72,11 @@ test_exceptions test_pop() {
 
 test_exceptions test_resize_up() {
   stack* stack = construct();
-  int temp_size = stack->size;
+  int temp_size = stack->capacity;
   for(int i = 0; i < 5; i++) {
     push(stack, i+1);
   }
-  if(temp_size*2 != stack->size) {
+  if(temp_size*2 != stack->capacity) {
     free(stack);
     return failure;
   }
@@ -89,9 +89,9 @@ test_exceptions test_resize_down() {
   for(int i = 0; i < 8; i++) {
     push(stack, i+1);
   }
-  int temp_size = stack->size;
+  int temp_size = stack->capacity;
   resize_down(stack);
-  if(temp_size/2 != stack->size || stack->arr[stack->pointer+1] != (elem_t)canary) {
+  if(temp_size/2 != stack->capacity || stack->arr[stack->size+1] != (elem_t)canary) {
     free(stack);
     return failure;
   }
